@@ -1,0 +1,41 @@
+<% settings = Setting['plugin_traffic_lights'] %>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'traffic_lights', plugin: :traffic_lights %>
+
+  <style>
+    <% settings.each do |key,value| %>
+      <% unless key.include?("enabled") || value.blank? %>
+        <%  class_suffix = "#{value}" %>
+        <% if value.start_with? "#" %>
+          <%  class_suffix = "#{value.tr("#", "")}" %>
+        <% end %>
+
+        .semafor-<%= class_suffix %>::before {
+            background-color: <%= value %>;
+        }
+
+      <% end %>
+    <%  end %>
+
+  </style>
+<% end %>
+
+
+
+
+<script type="text/javascript">
+    <% CustomField.where(:field_format => 'list').each do |custom_list| %>
+      <% unless settings["enabled_#{custom_list.id}"].blank? %>
+        <% custom_list.possible_values.each do |enum| %>
+          <% unless settings["#{custom_list.id}_#{enum}"].blank? %>
+
+            <% color = settings["#{custom_list.id}_#{enum}"] %>
+            <% color_class = color.start_with?("#") ? color.tr("#", "") : color %>
+            $(".cf_<%= custom_list.id %><%= selector_suffix %>:contains(<%= enum %>)").addClass("semafor semafor-<%= color_class %>");
+
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+</script>

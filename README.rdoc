@@ -1,0 +1,10 @@
+= Sperling Semafor Plugin pro Redmine
+
+Plugin zobrazuje barevnný terčík vlevo od hodnoty uživatelského atributu "Semafor".
+
+Konfigurace:
+Lze nastavit pro libovolný uživatelský atributy typu seznam.
+Pro každý takový atribut lze ke každé jeho hodnotě zvolit barvu (CSS jméno barvy, např. <tt>lightblue</tt>, <tt>darkgreen</tt>).
+
+Konfigurace je globální.
+

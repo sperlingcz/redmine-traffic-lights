@@ -1,0 +1,20 @@
+td.list.semafor {
+    text-align: left;
+    min-width: 92px;
+    padding-right: 5px;
+}
+
+.semafor::before {
+    content: "\00a0";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 40%;
+    margin-right: 2px;
+    vertical-align: middle;
+    margin-top: -2px;
+/*  background-image: url("../images/semafor.png");
+    background-size: contain;*/
+    border: 1px solid var(--sparkline-edge);
+    overflow: hidden;
+}

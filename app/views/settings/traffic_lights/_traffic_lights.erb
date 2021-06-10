@@ -1,0 +1,62 @@
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'w3color', plugin: :traffic_lights %>
+<% end %>
+
+<% CustomField.where(:field_format => 'list').each do |custom_list| %>
+  <table>
+    <tbody>
+    <tr>
+      <th>
+        <%= custom_list.name %>
+      </th>
+      <td>
+        <%= check_box_tag "settings[enabled_#{custom_list.id.to_s}]",
+                          "1",
+                          @settings["enabled_" + custom_list.id.to_s],
+                          id: "enabled_#{custom_list.id.to_s}",
+                          class: 'lights_enable'
+        %>
+      </td>
+    </tr>
+    <% custom_list.possible_values.each do |enum| %>
+      <tr class="enabled_<%= custom_list.id.to_s %>" <%= "hidden" unless @settings["enabled_" + custom_list.id.to_s] %>>
+        <th>
+          <%= enum %>
+        </th>
+        <td><%= text_field_tag "settings[#{custom_list.id.to_s}_#{enum}]",
+                               @settings[custom_list.id.to_s + "_" + enum],
+                               id: "display_#{custom_list.id.to_s}_#{enum}",
+                               size: 30
+        %>
+          <%= color_field_tag "color_#{custom_list.id.to_s}_#{enum}",
+                              @settings[custom_list.id.to_s + "_" + enum],
+                              id: "#{custom_list.id.to_s}_#{enum}",
+                              class: "color_palet"
+          %>
+        </td>
+        <%  end  %>
+        </tr>
+        </tbody>
+        </table>
+
+        <%  end %>
+
+
+        <script type="application/javascript">
+            $(".color_palet").each(function (i,v) {
+                var colorObj = w3color($("#display_" + v.id).val());
+                this.value = colorObj.toHexString();
+            });
+
+            $(".lights_enable").change(function () {
+                if (this.checked) {
+                    $("." + this.id).removeAttr("hidden");
+                } else {
+                    $("." + this.id).attr("hidden", true);
+                }
+            });
+
+            $(".color_palet").change(function () {
+                    $("#display_" + this.id).val(this.value);
+            });
+        </script>
