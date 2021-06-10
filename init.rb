@@ -3,8 +3,8 @@ Redmine::Plugin.register :traffic_lights do
   author 'Sperling'
   description 'Traffic lights plugin '
   version '1.0.0'
-  url 'https://www.sperling.cz/redmine'
-  author_url 'https://www.sperling.cz/redmine'
+  url 'https://github.com/sperlingcz/redmine-traffic-lights.git'
+  author_url 'https://www.sperling.cz'
 
 
 
